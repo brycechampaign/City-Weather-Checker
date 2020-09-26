@@ -4,7 +4,11 @@
   "description": "A single-page web application using React JS that allows users to look up current weather information for cities around the world and add cities to a “favorites” list.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-dev": "webpack -d --mode development --watch",
+    "build-prod": "webpack -p --mode production",
+    "start": "node src/server/index.js",
+    "start-dev": "nodemon src/server/index.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +35,7 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0"
