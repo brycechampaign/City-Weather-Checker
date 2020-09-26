@@ -1,0 +1,17 @@
+export default [
+  'Tokyo',
+  'Delhi',
+  'Shanghai',
+  'São Paulo',
+  'Mexico City',
+  'Cairo',
+  'Mumbai',
+  'Beijing',
+  'Dhaka',
+  'Osaka',
+  'New York City',
+  'Karachi',
+  'Buenos Aires',
+  'Chongqing',
+  'Istanbul',
+];
