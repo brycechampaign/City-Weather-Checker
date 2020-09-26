@@ -17,7 +17,8 @@ const Home = () => {
     updateCitiesList(
       largestCities.map((city) => {
         return {
-          name: city,
+          name: city[0],
+          country: city[1],
           isFavorite: false,
         };
       })
