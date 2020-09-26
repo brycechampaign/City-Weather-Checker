@@ -9,7 +9,7 @@ const sortCitiesByName = (list) => {
   });
 };
 
-const SavedList = ({ locations, toggleFavorite }) => {
+const SavedList = ({ locations, toggleFavorite, removeCityFromSaved }) => {
   const sortedLocations = sortCitiesByName(locations);
   const favorites = [];
 
@@ -32,6 +32,7 @@ const SavedList = ({ locations, toggleFavorite }) => {
             name={location.name}
             key={location.name}
             toggleFavorite={toggleFavorite}
+            removeCityFromSaved={removeCityFromSaved}
           />
         ))}
       </div>

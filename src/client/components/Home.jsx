@@ -39,11 +39,30 @@ const Home = () => {
     updateCitiesList(cities);
   };
 
+  const removeCityFromSaved = (cityName) => {
+    const cities = getSaved();
+
+    for (let i = 0; i < cities.length; i++) {
+      const currCity = cities[i];
+
+      if (currCity.name === cityName) {
+        cities.splice(i, 1);
+        break;
+      }
+    }
+
+    updateCitiesList(cities);
+  };
+
   return (
     <>
       <h1>City Weather Checker</h1>
       {locations === null ? null : (
-        <SavedList locations={locations} toggleFavorite={toggleFavorite} />
+        <SavedList
+          locations={locations}
+          toggleFavorite={toggleFavorite}
+          removeCityFromSaved={removeCityFromSaved}
+        />
       )}
     </>
   );
