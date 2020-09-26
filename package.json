@@ -1,0 +1,38 @@
+{
+  "name": "city-weather-checker",
+  "version": "1.0.0",
+  "description": "A single-page web application using React JS that allows users to look up current weather information for cities around the world and add cities to a “favorites” list.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brycechampaign/City-Weather-Checker.git"
+  },
+  "keywords": [
+    "React",
+    "Weather"
+  ],
+  "author": "Bryce Champaign",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brycechampaign/City-Weather-Checker/issues"
+  },
+  "homepage": "https://github.com/brycechampaign/City-Weather-Checker#readme",
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0"
+  }
+}
