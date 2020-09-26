@@ -9,7 +9,7 @@ const sortCitiesByName = (list) => {
   });
 };
 
-const SavedList = ({ locations }) => {
+const SavedList = ({ locations, toggleFavorite }) => {
   const sortedLocations = sortCitiesByName(locations);
   const favorites = [];
 
@@ -28,7 +28,11 @@ const SavedList = ({ locations }) => {
       <h2>Saved</h2>
       <div id="savedList">
         {favorites.concat(sortedLocations).map((location) => (
-          <Location name={location.name} key={location.name} />
+          <Location
+            name={location.name}
+            key={location.name}
+            toggleFavorite={toggleFavorite}
+          />
         ))}
       </div>
     </>
