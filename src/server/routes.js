@@ -3,12 +3,12 @@ const axios = require('axios');
 const weatherKey = require('./weatherKey');
 
 router.get('/weather', async (req, res) => {
-  const { city, country } = req.query;
+  const { city, region, country } = req.query;
   console.log(req.query);
 
   const params = {
     access_key: weatherKey,
-    query: `${city}, ${country}`,
+    query: `${city}, ${region}, ${country}`,
   };
 
   const data = await axios
