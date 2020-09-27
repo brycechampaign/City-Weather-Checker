@@ -9,7 +9,12 @@ const sortCitiesByName = (list) => {
   });
 };
 
-const SavedList = ({ locations, toggleFavorite, removeCityFromSaved }) => {
+const SavedList = ({
+  locations,
+  toggleFavorite,
+  removeCityFromSaved,
+  weatherData,
+}) => {
   const sortedLocations = sortCitiesByName(locations);
   const favorites = [];
 
@@ -27,14 +32,20 @@ const SavedList = ({ locations, toggleFavorite, removeCityFromSaved }) => {
     <>
       <h2>Saved</h2>
       <div id="savedList">
-        {favorites.concat(sortedLocations).map((location) => (
-          <Location
-            name={location.name}
-            key={location.name}
-            toggleFavorite={toggleFavorite}
-            removeCityFromSaved={removeCityFromSaved}
-          />
-        ))}
+        {favorites.concat(sortedLocations).map((location) => {
+          const { name, country } = location;
+          const temp = weatherData[`${name}${country}`].temperature;
+
+          return (
+            <Location
+              name={name}
+              key={name}
+              toggleFavorite={toggleFavorite}
+              removeCityFromSaved={removeCityFromSaved}
+              temperature={temp}
+            />
+          );
+        })}
       </div>
     </>
   );

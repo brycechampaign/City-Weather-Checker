@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import SavedList from './SavedList';
 import largestCities from '../largestCitiesList';
+import { getCityWeather } from '../APIHelpers';
 
 const Home = () => {
   const getSaved = () => JSON.parse(localStorage.getItem('savedCities'));
+  const getWeatherData = () => JSON.parse(localStorage.getItem('weatherData'));
 
   const updateCitiesList = (newList) => {
     localStorage.setItem('savedCities', JSON.stringify(newList));
@@ -11,15 +13,35 @@ const Home = () => {
   };
 
   const [locations, setLocations] = useState(getSaved());
+  const [weatherData, setWeatherData] = useState(getWeatherData());
+
+  useEffect(() => {
+    if (locations !== null) {
+      const weatherData = {};
+
+      // Get weather data for each city
+      locations.forEach(async (location) => {
+        const cityData = await getCityWeather(location.name, location.country);
+        weatherData[`${location.name}${location.country}`] = cityData.data;
+
+        // When weather data for each city is collected, update localStorage and state
+        // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
+        if (Object.keys(weatherData).length === locations.length) {
+          localStorage.setItem('weatherData', JSON.stringify(weatherData));
+          setWeatherData(getWeatherData());
+        }
+      });
+    }
+  }, [locations]);
 
   if (locations === null) {
-    // Need to make request to API for additional city weather info in the future
     updateCitiesList(
       largestCities.map((city) => {
         return {
           name: city[0],
           country: city[1],
           isFavorite: false,
+          notes: [],
         };
       })
     );
@@ -63,6 +85,7 @@ const Home = () => {
           locations={locations}
           toggleFavorite={toggleFavorite}
           removeCityFromSaved={removeCityFromSaved}
+          weatherData={weatherData}
         />
       )}
     </>
