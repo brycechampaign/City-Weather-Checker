@@ -4,7 +4,6 @@ const weatherKey = require('./weatherKey');
 
 router.get('/weather', async (req, res) => {
   const { city, region, country } = req.query;
-  console.log(req.query);
 
   const params = {
     access_key: weatherKey,
