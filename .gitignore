@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Weather API Key
+weatherKey.js
