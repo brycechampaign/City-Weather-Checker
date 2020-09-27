@@ -22,8 +22,9 @@ const Home = () => {
 
       // Get weather data for each city
       locations.forEach(async (location) => {
-        const cityData = await getCityWeather(location.name, location.country);
-        weatherData[`${location.name}${location.country}`] = cityData.data;
+        const { name, country, region } = location;
+        const cityData = await getCityWeather(name, region, country);
+        weatherData[`${name}${region}${country}`] = cityData.data;
 
         // When weather data for each city is collected, update localStorage and state
         // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
@@ -89,7 +90,7 @@ const Home = () => {
           weatherData={weatherData}
         />
       )}
-      <Search />
+      <Search toggleFavorite={toggleFavorite} />
     </>
   );
 };
