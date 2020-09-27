@@ -1,8 +1,26 @@
 import React, { useState } from 'react';
-import { searchCities } from '../APIHelpers';
+import { searchCities, getCityWeather } from '../APIHelpers';
+import ResultsList from './ResultsList';
 
-const Search = () => {
+const Search = ({ toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
+  const [resultsWeatherData, setResultsWeatherData] = useState(null);
+
+  const getWeatherData = (cities) => {
+    const weatherData = {};
+
+    cities.forEach(async (city) => {
+      const cityData = await getCityWeather(city.name, city.country);
+      weatherData[`${city.name}${city.region}${city.country}`] = cityData.data;
+
+      // When weather data for each city is collected, update state
+      // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
+      if (Object.keys(weatherData).length === cities.length) {
+        setResultsWeatherData(weatherData);
+      }
+    });
+  };
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value);
@@ -10,8 +28,13 @@ const Search = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Get list of cities using search term
     const cities = await searchCities(searchTerm);
-    console.log(cities);
+    setResults(cities);
+
+    // Retrieve weather information for cities
+    getWeatherData(cities);
   };
 
   return (
@@ -26,6 +49,13 @@ const Search = () => {
         />
         <input type="submit" value="Search" />
       </form>
+      {results.length > 0 && resultsWeatherData !== null ? (
+        <ResultsList
+          results={results}
+          toggleFavorite={toggleFavorite}
+          weatherData={resultsWeatherData}
+        />
+      ) : null}
     </div>
   );
 };
