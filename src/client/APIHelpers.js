@@ -7,3 +7,13 @@ export const getCityWeather = async (city, country) => {
     params: { city, country },
   });
 };
+
+export const searchCities = async (searchTerm) => {
+  return await axios
+    .get('/cities', {
+      params: {
+        searchTerm,
+      },
+    })
+    .then((results) => results.data.data);
+};
