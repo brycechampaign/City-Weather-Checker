@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SavedList from './SavedList';
 import largestCities from '../largestCitiesList';
 import { getCityWeather } from '../APIHelpers';
+import Search from './Search';
 
 const Home = () => {
   const getSaved = () => JSON.parse(localStorage.getItem('savedCities'));
@@ -88,6 +89,7 @@ const Home = () => {
           weatherData={weatherData}
         />
       )}
+      <Search />
     </>
   );
 };
