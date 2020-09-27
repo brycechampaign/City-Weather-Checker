@@ -22,6 +22,40 @@ router.get('/weather', async (req, res) => {
   res.send(data.current);
 });
 
+router.get('/cities', async (req, res) => {
+  const { searchTerm } = req.query;
+
+  const axios = require('axios');
+
+  axios({
+    method: 'GET',
+    url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
+    headers: {
+      'content-type': 'application/octet-stream',
+      'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
+      'x-rapidapi-key': '2729484a2amsh81fb424cfc9ec44p10fec6jsn8236b7232769',
+      useQueryString: true,
+    },
+    params: {
+      namePrefix: searchTerm,
+      sort: 'name',
+      types: 'CITY',
+    },
+  })
+    .then((response) => {
+      const results = response.data;
+
+      if (results.length === 0) {
+        res.sendStatus(404);
+      } else {
+        res.send(results);
+      }
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    });
+});
+
 router.get('*', (req, res) => {
   res.redirect('/');
 });
