@@ -6,13 +6,19 @@ const Location = ({
   temperature,
   toggleFavorite,
   removeCityFromSaved,
+  region,
+  country,
 }) => {
   return (
     <div className="location">
-      {name}
-      {temperature}
+      <p>{name}</p>
+      <p>{region}</p>
+      <p>{country}</p>
+      <p>{temperature}</p>
       <button onClick={() => toggleFavorite(name)}>Favorite</button>
-      <button onClick={() => removeCityFromSaved(name)}>Delete</button>
+      {removeCityFromSaved === null ? null : (
+        <button onClick={() => removeCityFromSaved(name)}>Delete</button>
+      )}
     </div>
   );
 };
