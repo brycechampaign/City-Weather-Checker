@@ -35,9 +35,13 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "axios": "^0.20.0",
+    "body-parser": "^1.19.0",
+    "core-js": "^3.6.5",
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "regenerator-runtime": "^0.13.7"
   }
 }
