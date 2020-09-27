@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const weatherKey = require('./weatherKey');
+const { weatherKey, cityKey } = require('./keys');
 
 router.get('/weather', async (req, res) => {
   const { city, region, country } = req.query;
@@ -32,7 +32,7 @@ router.get('/cities', async (req, res) => {
     headers: {
       'content-type': 'application/octet-stream',
       'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-      'x-rapidapi-key': '2729484a2amsh81fb424cfc9ec44p10fec6jsn8236b7232769',
+      'x-rapidapi-key': cityKey,
       useQueryString: true,
     },
     params: {
