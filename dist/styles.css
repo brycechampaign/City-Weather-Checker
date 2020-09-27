@@ -4,7 +4,70 @@
   font-family: 'Roboto', sans-serif;
 }
 
+#root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 #savedList {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+#saved-list-wrapper {
+  width: 80%;
+}
+
+#results-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.location {
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.29);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  width: 20em;
+  font-size: 1.1em;
+  padding: 0.3em;
+  margin: 1em;
+}
+
+.location-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.location-container {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  justify-content: space-around;
+}
+
+.location-top-text {
+  margin-bottom: 8%;
+}
+
+.location-bottom-text {
+  margin-top: 8%;
+  font-size: 0.8em;
+  color: dimgray;
+}
+
+.location-temperature {
+  font-size: 1.3em;
+}
+
+#search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

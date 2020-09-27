@@ -9,16 +9,23 @@ const Location = ({
   region,
   country,
 }) => {
+  const subtitle = region ? `${region}, ${country}` : country;
+
   return (
     <div className="location">
-      <p>{name}</p>
-      <p>{region}</p>
-      <p>{country}</p>
-      <p>{temperature}</p>
-      <button onClick={() => toggleFavorite(name)}>Favorite</button>
-      {removeCityFromSaved === null ? null : (
-        <button onClick={() => removeCityFromSaved(name)}>Delete</button>
-      )}
+      <div className="location-container">
+        <button onClick={() => toggleFavorite(name)}>Favorite</button>
+        <div className="location-label">
+          <p className="location-top-text">{name}</p>
+          <p className="location-bottom-text">{subtitle}</p>
+        </div>
+      </div>
+      <div className="location-container">
+        <p className="location-temperature">{`${temperature} °C`}</p>
+        {removeCityFromSaved === null ? null : (
+          <button onClick={() => removeCityFromSaved(name)}>Delete</button>
+        )}
+      </div>
     </div>
   );
 };

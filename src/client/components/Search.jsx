@@ -38,7 +38,7 @@ const Search = ({ toggleFavorite }) => {
   };
 
   return (
-    <div>
+    <div id="search-container">
       <h2>Search</h2>
       <form onSubmit={(e) => handleSubmit(e)}>
         <input

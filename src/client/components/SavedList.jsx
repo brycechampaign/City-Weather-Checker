@@ -31,26 +31,28 @@ const SavedList = ({
   return (
     <>
       <h2>Saved</h2>
-      <div id="savedList">
-        {favorites.concat(sortedLocations).map((location) => {
-          const { name, country, region } = location;
-          const temp =
-            weatherData === null
-              ? null
-              : weatherData[`${name}${region}${country}`].temperature;
+      <div id="saved-list-wrapper">
+        <div id="savedList">
+          {favorites.concat(sortedLocations).map((location) => {
+            const { name, country, region } = location;
+            const temp =
+              weatherData === null
+                ? null
+                : weatherData[`${name}${region}${country}`].temperature;
 
-          return (
-            <Location
-              name={name}
-              key={name}
-              country={country}
-              region={region}
-              toggleFavorite={toggleFavorite}
-              removeCityFromSaved={removeCityFromSaved}
-              temperature={temp}
-            />
-          );
-        })}
+            return (
+              <Location
+                name={name}
+                key={name}
+                country={country}
+                region={region}
+                toggleFavorite={toggleFavorite}
+                removeCityFromSaved={removeCityFromSaved}
+                temperature={temp}
+              />
+            );
+          })}
+        </div>
       </div>
     </>
   );
