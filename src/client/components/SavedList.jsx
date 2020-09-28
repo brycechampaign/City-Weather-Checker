@@ -1,7 +1,7 @@
 import React from 'react';
 import Location from './Location';
 
-const sortCitiesByName = (list) => {
+const sortCitiesByName = ([...list]) => {
   return list.sort((a, b) => {
     var name1 = a.name.toUpperCase();
     var name2 = b.name.toUpperCase();
@@ -34,21 +34,21 @@ const SavedList = ({
       <div id="saved-list-wrapper">
         <div id="savedList">
           {favorites.concat(sortedLocations).map((location) => {
-            const { name, country, region } = location;
+            const { name, country, region, id } = location;
             const temp =
-              weatherData === null
-                ? null
-                : weatherData[`${name}${region}${country}`].temperature;
+              weatherData === null ? null : weatherData[id].temperature;
 
             return (
               <Location
                 name={name}
-                key={name}
+                key={id}
                 country={country}
                 region={region}
                 toggleFavorite={toggleFavorite}
                 removeCityFromSaved={removeCityFromSaved}
                 temperature={temp}
+                city={location}
+                id={id}
               />
             );
           })}

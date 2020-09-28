@@ -11,8 +11,9 @@ const Search = ({ toggleFavorite }) => {
     const weatherData = {};
 
     cities.forEach(async (city) => {
-      const cityData = await getCityWeather(city.name, city.country);
-      weatherData[`${city.name}${city.region}${city.country}`] = cityData.data;
+      const { name, region, country, id } = city;
+      const cityData = await getCityWeather(name, region, country);
+      weatherData[id] = cityData.data;
 
       // When weather data for each city is collected, update state
       // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand

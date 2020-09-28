@@ -8,13 +8,13 @@ const Home = () => {
   const getSaved = () => JSON.parse(localStorage.getItem('savedCities'));
   const getWeatherData = () => JSON.parse(localStorage.getItem('weatherData'));
 
-  const updateCitiesList = (newList) => {
-    localStorage.setItem('savedCities', JSON.stringify(newList));
-    setLocations(JSON.parse(localStorage.getItem('savedCities')));
-  };
-
   const [locations, setLocations] = useState(getSaved());
   const [weatherData, setWeatherData] = useState(getWeatherData());
+
+  const updateCitiesList = (newList) => {
+    localStorage.setItem('savedCities', JSON.stringify(newList));
+    setLocations(newList);
+  };
 
   useEffect(() => {
     if (locations !== null) {
@@ -22,9 +22,9 @@ const Home = () => {
 
       // Get weather data for each city
       locations.forEach(async (location) => {
-        const { name, country, region } = location;
+        const { name, country, region, id } = location;
         const cityData = await getCityWeather(name, region, country);
-        weatherData[`${name}${region}${country}`] = cityData.data;
+        weatherData[`${id}`] = cityData.data;
 
         // When weather data for each city is collected, update localStorage and state
         // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
@@ -40,6 +40,7 @@ const Home = () => {
     updateCitiesList(
       largestCities.map((city) => {
         return {
+          id: city[2],
           name: city[0],
           country: city[1],
           isFavorite: false,
@@ -49,28 +50,55 @@ const Home = () => {
     );
   }
 
-  const toggleFavorite = (cityName) => {
+  const addCityToSaved = async (city, isFavorite = false) => {
+    city.isFavorite = isFavorite;
+
+    const savedCities = getSaved();
+
+    const cityWeather = await getCityWeather(
+      city.name,
+      city.region,
+      city.country
+    );
+
+    const currWeather = getWeatherData();
+    currWeather[city.id] = cityWeather;
+
+    localStorage.setItem('weatherData', JSON.stringify(currWeather));
+    setWeatherData(getWeatherData());
+
+    updateCitiesList([...savedCities, city]);
+  };
+
+  const toggleFavorite = async (city) => {
+    let isSaved = false;
     const cities = getSaved();
+    const { id } = city;
 
     for (let i = 0; i < cities.length; i++) {
       const currCity = cities[i];
 
-      if (currCity.name === cityName) {
+      if (currCity.id === id) {
         cities[i].isFavorite = !currCity.isFavorite;
+        isSaved = true;
         break;
       }
     }
 
-    updateCitiesList(cities);
+    if (!isSaved) {
+      addCityToSaved(city, true);
+    } else {
+      updateCitiesList(cities);
+    }
   };
 
-  const removeCityFromSaved = (cityName) => {
+  const removeCityFromSaved = (id) => {
     const cities = getSaved();
 
     for (let i = 0; i < cities.length; i++) {
       const currCity = cities[i];
 
-      if (currCity.name === cityName) {
+      if (currCity.id === id) {
         cities.splice(i, 1);
         break;
       }
