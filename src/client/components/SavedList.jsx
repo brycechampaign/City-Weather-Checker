@@ -34,7 +34,14 @@ const SavedList = ({
       <div id="saved-list-wrapper">
         <div id="savedList">
           {favorites.concat(sortedLocations).map((location) => {
-            const { name, country, region, id } = location;
+            const {
+              name,
+              country,
+              region,
+              id,
+              isFavorite,
+              countryCode,
+            } = location;
             const temp =
               weatherData === null ? null : weatherData[id].temperature;
 
@@ -43,12 +50,14 @@ const SavedList = ({
                 name={name}
                 key={id}
                 country={country}
+                countryCode={countryCode}
                 region={region}
                 toggleFavorite={toggleFavorite}
                 removeCityFromSaved={removeCityFromSaved}
                 temperature={temp}
                 city={location}
                 id={id}
+                isFavorite={isFavorite}
               />
             );
           })}

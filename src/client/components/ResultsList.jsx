@@ -5,7 +5,7 @@ const ResultsList = ({ results, toggleFavorite, weatherData }) => {
   return (
     <div id="results-list">
       {results.map((city) => {
-        const { name, country, region, id } = city;
+        const { name, country, region, id, countryCode } = city;
         const temp = weatherData[id].temperature;
 
         return (
@@ -13,6 +13,7 @@ const ResultsList = ({ results, toggleFavorite, weatherData }) => {
             name={name}
             key={id}
             country={country}
+            countryCode={countryCode}
             region={region}
             toggleFavorite={toggleFavorite}
             removeCityFromSaved={null}
