@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { searchCities, getCityWeather } from '../APIHelpers';
 import ResultsList from './ResultsList';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const Search = ({ toggleFavorite }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -40,16 +42,23 @@ const Search = ({ toggleFavorite }) => {
 
   return (
     <div id="search-container">
-      <h2>Search</h2>
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input
-          id="search-bar"
-          type="text"
-          value={searchTerm}
-          onChange={(e) => handleChange(e)}
-        />
-        <input type="submit" value="Search" />
-      </form>
+      <div class="searchbar-wrap">
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div class="search">
+            <input
+              type="text"
+              class="search-term"
+              placeholder="Search for a city"
+              value={searchTerm}
+              onChange={(e) => handleChange(e)}
+            />
+            <button type="submit" class="search-button">
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+          </div>
+        </form>
+      </div>
+
       {results.length > 0 && resultsWeatherData !== null ? (
         <ResultsList
           results={results}
