@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Spinner from './Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -70,7 +71,9 @@ const Location = ({
           </div>
         </div>
         <div className="location-container">
-          <p className="location-temperature">{`${temperature} °C`}</p>
+          <p className="location-temperature">
+            {temperature ? `${temperature} °C` : <Spinner />}
+          </p>
           {removeCityFromSaved === null ? null : (
             <span
               onClick={(e) => handleDeleteClick(e)}
