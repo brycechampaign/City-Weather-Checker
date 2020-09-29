@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { searchCities, getCityWeather } from '../APIHelpers';
 import ResultsList from './ResultsList';
+import Spinner from './Spinner';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,7 +9,7 @@ const Search = ({ toggleFavorite, weatherData, setWeatherData, locations }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
   const [hasWeatherData, setHasWeatherData] = useState(false);
-  // const [resultsWeatherData, setResultsWeatherData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getWeatherData = (cities) => {
     const newWeatherData = {};
@@ -16,6 +17,10 @@ const Search = ({ toggleFavorite, weatherData, setWeatherData, locations }) => {
     cities.forEach(async (city) => {
       const { name, region, country, id } = city;
       const cityData = await getCityWeather(name, region, country);
+
+      // Remove spinner
+      setIsLoading(false);
+
       newWeatherData[id] = cityData.data;
 
       // When weather data for each city is collected, update state
@@ -33,6 +38,12 @@ const Search = ({ toggleFavorite, weatherData, setWeatherData, locations }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Display spinner
+    setIsLoading(true);
+
+    // Reset hasWeatherData so results don't erroneously display early without weather data
+    setHasWeatherData(false);
 
     // Get list of cities using search term
     const cities = await searchCities(searchTerm);
@@ -55,7 +66,7 @@ const Search = ({ toggleFavorite, weatherData, setWeatherData, locations }) => {
               onChange={(e) => handleChange(e)}
             />
             <button type="submit" className="search-button">
-              <FontAwesomeIcon icon={faSearch} />
+              {isLoading ? <Spinner /> : <FontAwesomeIcon icon={faSearch} />}
             </button>
           </div>
         </form>
