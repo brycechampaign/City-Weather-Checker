@@ -4,23 +4,25 @@ import ResultsList from './ResultsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Search = ({ toggleFavorite }) => {
+const Search = ({ toggleFavorite, weatherData, setWeatherData }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
-  const [resultsWeatherData, setResultsWeatherData] = useState(null);
+  const [hasWeatherData, setHasWeatherData] = useState(false);
+  // const [resultsWeatherData, setResultsWeatherData] = useState(null);
 
   const getWeatherData = (cities) => {
-    const weatherData = {};
+    const newWeatherData = {};
 
     cities.forEach(async (city) => {
       const { name, region, country, id } = city;
       const cityData = await getCityWeather(name, region, country);
-      weatherData[id] = cityData.data;
+      newWeatherData[id] = cityData.data;
 
       // When weather data for each city is collected, update state
       // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
-      if (Object.keys(weatherData).length === cities.length) {
-        setResultsWeatherData(weatherData);
+      if (Object.keys(newWeatherData).length === cities.length) {
+        setWeatherData({ ...weatherData, ...newWeatherData });
+        setHasWeatherData(true);
       }
     });
   };
@@ -42,28 +44,28 @@ const Search = ({ toggleFavorite }) => {
 
   return (
     <div id="search-container">
-      <div class="searchbar-wrap">
+      <div className="searchbar-wrap">
         <form onSubmit={(e) => handleSubmit(e)}>
-          <div class="search">
+          <div className="search">
             <input
               type="text"
-              class="search-term"
+              className="search-term"
               placeholder="Search for a city"
               value={searchTerm}
               onChange={(e) => handleChange(e)}
             />
-            <button type="submit" class="search-button">
+            <button type="submit" className="search-button">
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
         </form>
       </div>
 
-      {results.length > 0 && resultsWeatherData !== null ? (
+      {results.length > 0 && hasWeatherData ? (
         <ResultsList
           results={results}
           toggleFavorite={toggleFavorite}
-          weatherData={resultsWeatherData}
+          weatherData={weatherData}
         />
       ) : null}
     </div>
