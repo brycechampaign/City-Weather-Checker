@@ -37,6 +37,18 @@ const Location = ({
     <FontAwesomeIcon icon={faTrashReg} className="fa-2x" />
   );
 
+  const handleFavoriteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleFavorite(city);
+  };
+
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    removeCityFromSaved(id);
+  };
+
   return (
     <Link
       to={`/city/${id}/${`${name}, ${country}`}`}
@@ -46,7 +58,7 @@ const Location = ({
         <div className="location-container">
           <span
             className="favorite-icon-container"
-            onClick={() => toggleFavorite(city)}
+            onClick={(e) => handleFavoriteClick(e)}
             onMouseEnter={() => setIsHoveringFavorite(true)}
             onMouseLeave={() => setIsHoveringFavorite(false)}
           >
@@ -61,7 +73,7 @@ const Location = ({
           <p className="location-temperature">{`${temperature} °C`}</p>
           {removeCityFromSaved === null ? null : (
             <span
-              onClick={() => removeCityFromSaved(id)}
+              onClick={(e) => handleDeleteClick(e)}
               onMouseEnter={() => setIsHoveringDelete(true)}
               onMouseLeave={() => setIsHoveringDelete(false)}
             >
