@@ -4,11 +4,24 @@
   font-family: 'Roboto', sans-serif;
 }
 
+body {
+  margin: 0 auto;
+}
+
 #root {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+/* Site header */
+#banner {
+  width: 100%;
+  background-color: blue;
+  color: white;
+  display: flex;
+  justify-content: center;
 }
 
 /* SavedList styles */
@@ -22,6 +35,10 @@
 
 #saved-list-wrapper {
   width: 80%;
+}
+
+#saved-heading {
+  margin-top: 3%;
 }
 
 /* ResultsList styles */
@@ -130,4 +147,57 @@
   .searchbar-wrap {
     width: 15em;
   }
+}
+
+/* City Info Page Styles */
+
+#city-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#center-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5%;
+  padding: 3rem;
+}
+
+#bottom-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+#city-info-temp {
+  font-size: 4em;
+}
+
+#city-info-name {
+  font-size: 2em;
+}
+
+#feelslike-temp {
+  font-size: 1.2em;
+  margin: 1rem;
+  color: dimgray;
+}
+
+#weather-description {
+  font-size: 1.5em;
+}
+
+.card {
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.29);
+  border-radius: 8px;
+}
+
+.city-info-item {
+  padding: 1em;
+  font-size: 1.5em;
+  margin: 1em;
 }
