@@ -30,7 +30,7 @@ const SavedList = ({
 
   return (
     <>
-      <h2>Saved</h2>
+      <h2 id="saved-heading">Saved</h2>
       <div id="saved-list-wrapper">
         <div id="savedList">
           {favorites.concat(sortedLocations).map((location) => {
