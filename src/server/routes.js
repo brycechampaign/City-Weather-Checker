@@ -6,7 +6,7 @@ router.get('/weather', async (req, res) => {
   const { city, region, country } = req.query;
 
   const params = {
-    access_key: weatherKey,
+    access_key: process.env.WEATHER_KEY || weatherKey,
     query: `${city}, ${region}, ${country}`,
   };
 
@@ -32,7 +32,7 @@ router.get('/cities', async (req, res) => {
     headers: {
       'content-type': 'application/octet-stream',
       'x-rapidapi-host': 'wft-geo-db.p.rapidapi.com',
-      'x-rapidapi-key': cityKey,
+      'x-rapidapi-key': process.env.CITY_KEY || cityKey,
       useQueryString: true,
     },
     params: {
