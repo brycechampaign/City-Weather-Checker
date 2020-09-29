@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -37,34 +38,39 @@ const Location = ({
   );
 
   return (
-    <div className="location">
-      <div className="location-container">
-        <span
-          className="favorite-icon-container"
-          onClick={() => toggleFavorite(city)}
-          onMouseEnter={() => setIsHoveringFavorite(true)}
-          onMouseLeave={() => setIsHoveringFavorite(false)}
-        >
-          {favoriteIcon}
-        </span>
-        <div className="location-label">
-          <p className="location-top-text">{name}</p>
-          <p className="location-bottom-text">{subtitle}</p>
+    <Link
+      to={`/city/${id}/${`${name}, ${country}`}`}
+      style={{ textDecoration: 'none' }}
+    >
+      <div className="location">
+        <div className="location-container">
+          <span
+            className="favorite-icon-container"
+            onClick={() => toggleFavorite(city)}
+            onMouseEnter={() => setIsHoveringFavorite(true)}
+            onMouseLeave={() => setIsHoveringFavorite(false)}
+          >
+            {favoriteIcon}
+          </span>
+          <div className="location-label">
+            <p className="location-top-text">{name}</p>
+            <p className="location-bottom-text">{subtitle}</p>
+          </div>
+        </div>
+        <div className="location-container">
+          <p className="location-temperature">{`${temperature} °C`}</p>
+          {removeCityFromSaved === null ? null : (
+            <span
+              onClick={() => removeCityFromSaved(id)}
+              onMouseEnter={() => setIsHoveringDelete(true)}
+              onMouseLeave={() => setIsHoveringDelete(false)}
+            >
+              {deleteIcon}
+            </span>
+          )}
         </div>
       </div>
-      <div className="location-container">
-        <p className="location-temperature">{`${temperature} °C`}</p>
-        {removeCityFromSaved === null ? null : (
-          <span
-            onClick={() => removeCityFromSaved(id)}
-            onMouseEnter={() => setIsHoveringDelete(true)}
-            onMouseLeave={() => setIsHoveringDelete(false)}
-          >
-            {deleteIcon}
-          </span>
-        )}
-      </div>
-    </div>
+    </Link>
   );
 };
 
