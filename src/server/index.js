@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 3000; // Temporary, for development purposes. Will use environment variable later
+const PORT = process.env.PORT || 3000;
 const router = require('./routes');
 const bodyParser = require('body-parser');
 
