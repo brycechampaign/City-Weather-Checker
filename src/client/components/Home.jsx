@@ -134,6 +134,7 @@ const Home = () => {
         toggleFavorite={toggleFavorite}
         weatherData={weatherData}
         setWeatherData={setWeatherData}
+        locations={locations}
       />
     </>
   );

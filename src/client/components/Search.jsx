@@ -4,7 +4,7 @@ import ResultsList from './ResultsList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const Search = ({ toggleFavorite, weatherData, setWeatherData }) => {
+const Search = ({ toggleFavorite, weatherData, setWeatherData, locations }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
   const [hasWeatherData, setHasWeatherData] = useState(false);
@@ -66,6 +66,7 @@ const Search = ({ toggleFavorite, weatherData, setWeatherData }) => {
           results={results}
           toggleFavorite={toggleFavorite}
           weatherData={weatherData}
+          locations={locations}
         />
       ) : null}
     </div>

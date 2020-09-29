@@ -1,7 +1,12 @@
 import React from 'react';
 import Location from '../components/Location';
 
-const ResultsList = ({ results, toggleFavorite, weatherData }) => {
+const ResultsList = ({ results, toggleFavorite, weatherData, locations }) => {
+  const favoriteMap = {};
+  locations.forEach((location) => {
+    favoriteMap[location.id] = location.isFavorite;
+  });
+
   return (
     <div id="results-list">
       {results.map((city) => {
@@ -20,6 +25,7 @@ const ResultsList = ({ results, toggleFavorite, weatherData }) => {
             temperature={temp}
             city={city}
             id={id}
+            isFavorite={favoriteMap[id]}
           />
         );
       })}
