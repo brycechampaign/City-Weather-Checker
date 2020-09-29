@@ -17,6 +17,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    let unmounted = false;
     if (locations !== null) {
       const weatherData = {};
 
@@ -30,11 +31,23 @@ const Home = () => {
         // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
         if (Object.keys(weatherData).length === locations.length) {
           localStorage.setItem('weatherData', JSON.stringify(weatherData));
-          setWeatherData(getWeatherData());
+          if (!unmounted) {
+            setWeatherData(getWeatherData());
+          }
         }
       });
     }
+
+    return () => {
+      unmounted = true;
+    };
   }, [locations]);
+
+  useEffect(() => {
+    if (weatherData !== null) {
+      localStorage.setItem('weatherData', JSON.stringify(weatherData));
+    }
+  }, [weatherData]);
 
   if (locations === null) {
     updateCitiesList(
@@ -109,7 +122,6 @@ const Home = () => {
 
   return (
     <>
-      <h1>City Weather Checker</h1>
       {locations === null ? null : (
         <SavedList
           locations={locations}
@@ -118,7 +130,11 @@ const Home = () => {
           weatherData={weatherData}
         />
       )}
-      <Search toggleFavorite={toggleFavorite} />
+      <Search
+        toggleFavorite={toggleFavorite}
+        weatherData={weatherData}
+        setWeatherData={setWeatherData}
+      />
     </>
   );
 };
