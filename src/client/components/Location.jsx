@@ -23,6 +23,9 @@ const Location = ({
   const [isHoveringFavorite, setIsHoveringFavorite] = useState(false);
   const [isHoveringDelete, setIsHoveringDelete] = useState(false);
 
+  // If there is no region provided, display just the country
+  //  if there is a region and a countryCode, display the countryCode
+  //  if there is a region and no countryCode, display the country
   const subtitle = region ? `${region}, ${countryCode || country}` : country;
 
   const favoriteIcon =
