@@ -28,6 +28,8 @@ const Location = ({
   //  if there is a region and no countryCode, display the country
   const subtitle = region ? `${region}, ${countryCode || country}` : country;
 
+  // If city is favorited or the favorite icon is being hovered over, display the solid favorite icon
+  // Otherwise, display the regular city icon
   const favoriteIcon =
     isFavorite || isHoveringFavorite ? (
       <FontAwesomeIcon icon={faHeart} className="favorite-icon fa-2x" />
@@ -35,6 +37,8 @@ const Location = ({
       <FontAwesomeIcon icon={faHeartReg} className="favorite-icon fa-2x" />
     );
 
+  // If the delete icon is being hovered over, display the solid delete icon
+  // Otherwise, display the normal delete icon
   const deleteIcon = isHoveringDelete ? (
     <FontAwesomeIcon icon={faTrashAlt} className="fa-2x" />
   ) : (
@@ -43,12 +47,19 @@ const Location = ({
 
   const handleFavoriteClick = (e) => {
     e.preventDefault();
+
+    // Prevent event from propogating to parent so it does
+    // not trigger the link to the City Info page
     e.stopPropagation();
+
     toggleFavorite(city);
   };
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
+
+    // Prevent event from propogating to parent so it does
+    // not trigger the link to the City Info page
     e.stopPropagation();
     removeCityFromSaved(id);
   };

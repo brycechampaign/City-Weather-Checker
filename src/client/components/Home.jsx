@@ -99,7 +99,7 @@ const Home = () => {
     );
   }
 
-  const addCityToSaved = async (city, isFavorite = false) => {
+  const addCityToSaved = async (city, isFavorite) => {
     city.isFavorite = isFavorite;
 
     const savedCities = getSaved();
@@ -110,12 +110,15 @@ const Home = () => {
       city.country
     ).then((data) => data.data);
 
+    // Get weather data from local storage and add new city weather to it
     const currWeather = getWeatherData();
     currWeather[city.id] = cityWeather;
 
+    // Update local storage
     localStorage.setItem('weatherData', JSON.stringify(currWeather));
     setWeatherData(currWeather);
 
+    // Add city to saved cities in state
     updateCitiesList([...savedCities, city]);
   };
 
@@ -128,6 +131,7 @@ const Home = () => {
       const currCity = cities[i];
 
       if (currCity.id === id) {
+        // City was found in saved list so simply toggle isFavorite
         cities[i].isFavorite = !currCity.isFavorite;
         isSaved = true;
         break;
@@ -135,6 +139,7 @@ const Home = () => {
     }
 
     if (!isSaved) {
+      // City is a search result and should be added to the saved list
       addCityToSaved(city, true);
     } else {
       updateCitiesList(cities);

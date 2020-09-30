@@ -21,6 +21,8 @@ const SavedList = ({
   for (let i = 0; i < sortedLocations.length; i++) {
     const currLocation = sortedLocations[i];
 
+    // if location is favorited, remove it from sortedLocations and
+    // add it to favorites array
     if (currLocation.isFavorite) {
       favorites.push(currLocation);
       sortedLocations.splice(i, 1);

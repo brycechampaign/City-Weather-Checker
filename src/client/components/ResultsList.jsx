@@ -2,6 +2,7 @@ import React from 'react';
 import Location from '../components/Location';
 
 const ResultsList = ({ results, toggleFavorite, weatherData, locations }) => {
+  // map for keeping track of favorited locations
   const favoriteMap = {};
   locations.forEach((location) => {
     favoriteMap[location.id] = location.isFavorite;
