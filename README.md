@@ -1,6 +1,22 @@
 # City-Weather-Checker
+[Check out the deployed application here](https://city-weather-tracker.herokuapp.com)
 
 A single-page web application using React JS that allows users to look up current weather information for cities around the world and add cities to a “favorites” list.
+
+## Table of Contents
+
+- [Features](#features)
+- [Getting Started](#getting-started)
+
+## Features
+### View a list of cities which persists across sessions using local storage
+![1](https://user-images.githubusercontent.com/24477732/94631823-e5484200-0296-11eb-99d9-25a51a09104b.png)
+
+### Search for new cities and save/favorite them
+![search3](https://user-images.githubusercontent.com/24477732/94632152-e168ef80-0297-11eb-8494-e8d6a101e87d.png)
+
+### Click on a city to view detailed weather information
+![weather-info](https://user-images.githubusercontent.com/24477732/94632276-212fd700-0298-11eb-8a86-347308f6ae3d.png)
 
 ## Getting Started
 
