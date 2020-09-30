@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
+import Notes from './Notes';
 
 const CityInfo = () => {
   const { id, name } = useParams();
@@ -61,6 +62,7 @@ const CityInfo = () => {
           </span>
         </span>
       </div>
+      <Notes cityId={id} />
     </div>
   );
 };
