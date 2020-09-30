@@ -45,6 +45,23 @@ const Notes = ({ cityId }) => {
     setNotes(getNotesFromStorage()[cityId]);
   };
 
+  const deleteNote = (id) => {
+    for (let i = 0; i < notes.length; i++) {
+      const currNote = notes[i];
+
+      if (currNote.id === id) {
+        const newNotes = [...notes];
+        newNotes.splice(i, 1);
+        setNotes(newNotes);
+
+        const storedNotes = getNotesFromStorage();
+        storedNotes[cityId] = newNotes;
+
+        localStorage.setItem('notes', JSON.stringify(storedNotes));
+      }
+    }
+  };
+
   return (
     <div id="notes-container">
       <h1>Notes</h1>
@@ -63,7 +80,12 @@ const Notes = ({ cityId }) => {
       </form>
       <div id="notes-list">
         {notes.map((note) => (
-          <Note text={note.text} key={note.id} />
+          <Note
+            text={note.text}
+            key={note.id}
+            setNotes={setNotes}
+            deleteNote={() => deleteNote(note.id)}
+          />
         ))}
       </div>
     </div>
