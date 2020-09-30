@@ -16,6 +16,8 @@ const Home = () => {
     setLocations(newList);
   };
 
+  // Every time locations is updated, gather weather data for saved cities and add it
+  // to local storage as well as state
   useEffect(() => {
     let unmounted = false;
     if (locations !== null) {
@@ -30,7 +32,13 @@ const Home = () => {
         // When weather data for each city is collected, update localStorage and state
         // This has to be done in order to wait for the asynchronous calls in the forEach statement to be completed beforehand
         if (Object.keys(weatherData).length === locations.length) {
-          localStorage.setItem('weatherData', JSON.stringify(weatherData));
+          // get existing weather data from local storage
+          const existingWeatherData = getWeatherData();
+
+          localStorage.setItem(
+            'weatherData',
+            JSON.stringify({ ...existingWeatherData, ...weatherData })
+          );
           if (!unmounted) {
             setWeatherData(getWeatherData());
           }
@@ -43,13 +51,41 @@ const Home = () => {
     };
   }, [locations]);
 
+  // When the component mountss and saved locations are loaded into state,
+  // fetch weather data for saved cities
+  useEffect(() => {
+    let unmounted = false;
+    if (locations !== null) {
+      const weatherData = {};
+
+      // Get weather data for each saved city
+      locations.forEach(async (location) => {
+        const { name, country, region, id } = location;
+        const cityData = await getCityWeather(name, region, country);
+        weatherData[`${id}`] = cityData.data;
+
+        // Reset weather data in local storage to only include data for saved cities
+        // Otherwise results weather data remains forever even after page reload
+        if (Object.keys(weatherData).length === locations.length) {
+          localStorage.setItem('weatherData', JSON.stringify(weatherData));
+          if (!unmounted) {
+            setWeatherData(getWeatherData());
+          }
+        }
+      });
+    }
+  }, []);
+
+  // When weatherData in state is updated, store it's value in local storage
   useEffect(() => {
     if (weatherData !== null) {
       localStorage.setItem('weatherData', JSON.stringify(weatherData));
     }
   }, [weatherData]);
 
+  // If local storage has no list of cities (new user or local storage has been emptied)
   if (locations === null) {
+    // Load the default city list into local storage and state
     updateCitiesList(
       largestCities.map((city) => {
         return {
@@ -72,13 +108,13 @@ const Home = () => {
       city.name,
       city.region,
       city.country
-    );
+    ).then((data) => data.data);
 
     const currWeather = getWeatherData();
     currWeather[city.id] = cityWeather;
 
     localStorage.setItem('weatherData', JSON.stringify(currWeather));
-    setWeatherData(getWeatherData());
+    setWeatherData(currWeather);
 
     updateCitiesList([...savedCities, city]);
   };
